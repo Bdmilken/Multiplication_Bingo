@@ -20,7 +20,8 @@ def generate_bingo_board():
 @app.route('/')
 def index():
     board = generate_bingo_board()
-    return render_template('board.html', board=board)
+    rows = list(zip(*board))
+    return render_template('board.html', rows=rows)
 
 
 if __name__ == '__main__':
