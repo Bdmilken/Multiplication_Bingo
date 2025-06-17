@@ -48,25 +48,16 @@
             const cell = event.target;
             const row = parseInt(cell.dataset.row, 10);
             const col = parseInt(cell.dataset.col, 10);
-            const randomValue = parseInt(document.getElementById('random-number').textContent, 10);
+            const randomValue = parseInt(
+                document.getElementById('random-number').textContent,
+                10
+            );
             const feedbackEl = document.getElementById('feedback');
             if (row * col === randomValue) {
                 cell.style.backgroundColor = 'lightgreen';
                 feedbackEl.value = 'Correct!';
-            }
-            else {
+            } else {
                 feedbackEl.value = 'Incorrect! Try again!';
-            }
-        }
-
-
-        function cellClicked(event) {
-            const cell = event.target;
-            const row = parseInt(cell.dataset.row, 10);
-            const col = parseInt(cell.dataset.col, 10);
-            const randomValue = parseInt(document.getElementById('random-number').textContent, 10);
-            if (row * col === randomValue) {
-                cell.style.backgroundColor = 'lightgreen';
             }
         }
         window.addEventListener('DOMContentLoaded', () => {
