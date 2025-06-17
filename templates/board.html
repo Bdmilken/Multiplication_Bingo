@@ -35,8 +35,24 @@
             margin-top: 1em;
             font-size: 1.2em;
         }
+        .bingo-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            z-index: 1000;
+            visibility: hidden;
+        }
     </style>
     <script>
+        const boardState = Array.from({ length: 12 }, () => Array(12).fill(false));
+
         function generateNumber() {
             const value = Math.floor(Math.random() * 144) + 1;
             document.getElementById('random-number').textContent = value;
@@ -54,14 +70,62 @@
             const feedbackEl = document.getElementById('feedback');
             if (row * col === randomValue) {
                 cell.style.backgroundColor = 'lightgreen';
+                boardState[row - 1][col - 1] = true;
                 feedbackEl.value = 'Correct!';
+                if (checkForBingo()) {
+                    showBingoMessage();
+                }
             } else {
                 feedbackEl.value = 'Incorrect! Try again!';
             }
         }
+
+        function checkDirection(r, c, rStep, cStep) {
+            for (let i = 0; i < 5; i++) {
+                if (!boardState[r + i * rStep]?.[c + i * cStep]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function checkForBingo() {
+            // horizontal
+            for (let r = 0; r < 12; r++) {
+                for (let c = 0; c <= 7; c++) {
+                    if (checkDirection(r, c, 0, 1)) return true;
+                }
+            }
+            // vertical
+            for (let c = 0; c < 12; c++) {
+                for (let r = 0; r <= 7; r++) {
+                    if (checkDirection(r, c, 1, 0)) return true;
+                }
+            }
+            // diagonal down-right
+            for (let r = 0; r <= 7; r++) {
+                for (let c = 0; c <= 7; c++) {
+                    if (checkDirection(r, c, 1, 1)) return true;
+                }
+            }
+            // diagonal down-left
+            for (let r = 0; r <= 7; r++) {
+                for (let c = 4; c < 12; c++) {
+                    if (checkDirection(r, c, 1, -1)) return true;
+                }
+            }
+            return false;
+        }
+
+        function showBingoMessage() {
+            const el = document.getElementById('bingo-message');
+            el.style.visibility = 'visible';
+        }
         window.addEventListener('DOMContentLoaded', () => {
             generateNumber();
-            document.querySelectorAll('td').forEach(td => td.addEventListener('click', cellClicked));
+            document
+                .querySelectorAll('td')
+                .forEach(td => td.addEventListener('click', cellClicked));
         });
     </script>
 </head>
@@ -92,5 +156,6 @@
             {% endfor %}
         </tbody>
     </table>
+    <div id="bingo-message" class="bingo-message">Bingo! You win!</div>
 </body>
 </html>
