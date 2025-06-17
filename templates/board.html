@@ -31,39 +31,12 @@
             text-align: center;
             font-size: 1.2em;
         }
-        td {
-            cursor: pointer;
-        }
-
     </style>
     <script>
-        let currentNumber = null;
-
         function generateNumber() {
-            currentNumber = Math.floor(Math.random() * 144) + 1;
-            document.getElementById('random-number').textContent = currentNumber;
-
-            // reset cell backgrounds when a new number is drawn
-            document.querySelectorAll('td').forEach(cell => {
-                cell.style.backgroundColor = '';
-            });
+            const value = Math.floor(Math.random() * 144) + 1;
+            document.getElementById('random-number').textContent = value;
         }
-
-        function checkCell(td) {
-            if (currentNumber === null) {
-                alert('Generate a number first!');
-                return;
-            }
-            const row = parseInt(td.dataset.row, 10);
-            const col = parseInt(td.dataset.col, 10);
-            if (currentNumber % row === 0 || currentNumber % col === 0) {
-                td.style.backgroundColor = 'lightgreen';
-                alert('That is correct');
-            } else {
-                alert('Incorrect! Try again!');
-            }
-        }
-
         window.addEventListener('DOMContentLoaded', generateNumber);
     </script>
 </head>
@@ -86,12 +59,8 @@
             {% for row in range(1, 13) %}
                 <tr>
                     <th>{{ row }}</th>
-                    {% for col in range(1, 13) %}
-                        <td data-row="{{ row }}" data-col="{{ col }}" onclick="checkCell(this)"></td>
-
                     {% for _ in range(12) %}
                         <td></td>
-
                     {% endfor %}
                 </tr>
             {% endfor %}
