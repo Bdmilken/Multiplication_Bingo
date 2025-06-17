@@ -32,9 +32,9 @@
             </tr>
         </thead>
         <tbody>
-            {% for row_num, row in enumerate(board, start=1) %}
+            {% for row in board %}
                 <tr>
-                    <th>{{ row_num }}</th>
+                    <th>{{ loop.index }}</th>
                     {% for cell in row %}
                         <td>{{ cell }}</td>
                     {% endfor %}
