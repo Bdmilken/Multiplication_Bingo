@@ -32,11 +32,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for row in board %}
+            {% for row in range(1, 13) %}
                 <tr>
-                    <th>{{ loop.index }}</th>
-                    {% for cell in row %}
-                        <td>{{ cell }}</td>
+                    <th>{{ row }}</th>
+                    {% for _ in range(12) %}
+                        <td></td>
                     {% endfor %}
                 </tr>
             {% endfor %}

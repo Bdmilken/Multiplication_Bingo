@@ -1,6 +1,6 @@
 # Multiplication Bingo
 
-This repository contains a command-line script that prints a 12x12 grid of numbers and a small Flask web app that shows the same 12x12 grid in the browser. The web page also generates a random number between 1 and 144 each time you click the "Next Number" button.
+This repository contains a command-line script that prints an empty 12x12 grid with row and column labels and a small Flask web app that displays the same blank grid in the browser. The web page also generates a random number between 1 and 144 each time you click the "Next Number" button.
 
 ## Command-line usage
 
