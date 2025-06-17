@@ -1,27 +1,22 @@
 from flask import Flask, render_template
-import random
 
 app = Flask(__name__)
 
-
-def generate_bingo_board():
-    ranges = {
-        'B': range(1, 16),
-        'I': range(16, 31),
-        'N': range(31, 46),
-        'G': range(46, 61),
-        'O': range(61, 76)
-    }
-    board = [random.sample(ranges[letter], 5) for letter in 'BINGO']
-    board[2][2] = 'FREE'
+def generate_board():
+    """Return a 12x12 grid with sequential numbers 1..144."""
+    board = []
+    num = 1
+    for _ in range(12):
+        row = list(range(num, num + 12))
+        board.append(row)
+        num += 12
     return board
 
 
 @app.route('/')
 def index():
-    board = generate_bingo_board()
-    rows = list(zip(*board))
-    return render_template('board.html', rows=rows)
+    board = generate_board()
+    return render_template('board.html', board=board)
 
 
 if __name__ == '__main__':
