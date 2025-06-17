@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Multiplication Bingo</title>
+    <style>
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 6px; text-align: center; }
+        .number-display { margin: 1em 0; }
+    </style>
+    <script>
+        function generateNumber() {
+            const value = Math.floor(Math.random() * 144) + 1;
+            document.getElementById('random-number').textContent = value;
+        }
+        window.addEventListener('DOMContentLoaded', generateNumber);
+    </script>
+</head>
+<body>
+    <h1>Multiplication Bingo</h1>
+    <div class="number-display">
+        Random Number: <span id="random-number"></span>
+        <button onclick="generateNumber()">Next Number</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                {% for col in range(1, 13) %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row_num, row in enumerate(board, start=1) %}
+                <tr>
+                    <th>{{ row_num }}</th>
+                    {% for cell in row %}
+                        <td>{{ cell }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
