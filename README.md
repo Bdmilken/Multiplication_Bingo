@@ -10,13 +10,19 @@ python3 bingo_board.py
 
 ## Web app usage
 
-1. Install the requirements:
+1. Verify that Python is installed (e.g. `python --version` or `python3 --version`):
 
 ```bash
-pip install flask
+python3 --version
 ```
 
-2. Run the Flask app:
+2. Install the requirements:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
+3. Run the Flask app:
 
 ```bash
 python3 app.py
