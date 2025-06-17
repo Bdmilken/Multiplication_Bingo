@@ -1,27 +1,15 @@
-import random
-
-def generate_bingo_board():
-    board = []
-    ranges = {
-        'B': range(1, 16),
-        'I': range(16, 31),
-        'N': range(31, 46),
-        'G': range(46, 61),
-        'O': range(61, 76)
-    }
-    for letter in 'BINGO':
-        numbers = random.sample(ranges[letter], 5)
-        board.append(numbers)
-    # Set the center space to "FREE"
-    board[2][2] = 'FREE'
-    return board
+def generate_board():
+    """Return a 12x12 grid of blank strings."""
+    return [["" for _ in range(12)] for _ in range(12)]
 
 def display_board(board):
-    headers = ' '.join(f"{c:^5}" for c in 'BINGO')
-    print(headers)
-    for row in zip(*board):
-        print(' '.join(f"{str(cell):^5}" for cell in row))
+    """Print the board with row and column labels."""
+    header = "    " + " " .join(f"{c:>4}" for c in range(1, 13))
+    print(header)
+    blank_cell = " " * 4
+    for idx in range(1, 13):
+        print(f"{idx:>3} " + " ".join(blank_cell for _ in range(12)))
 
 if __name__ == "__main__":
-    board = generate_bingo_board()
+    board = generate_board()
     display_board(board)
