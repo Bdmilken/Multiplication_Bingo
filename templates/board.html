@@ -31,13 +31,38 @@
             text-align: center;
             font-size: 1.2em;
         }
+        .feedback {
+            margin-top: 1em;
+            font-size: 1.2em;
+        }
     </style>
     <script>
         function generateNumber() {
             const value = Math.floor(Math.random() * 144) + 1;
             document.getElementById('random-number').textContent = value;
+            document.getElementById('feedback').value = '';
+            document.querySelectorAll('td').forEach(td => td.style.backgroundColor = '');
         }
-        window.addEventListener('DOMContentLoaded', generateNumber);
+
+        function cellClicked(event) {
+            const cell = event.target;
+            const row = parseInt(cell.dataset.row, 10);
+            const col = parseInt(cell.dataset.col, 10);
+            const randomValue = parseInt(document.getElementById('random-number').textContent, 10);
+            const feedbackEl = document.getElementById('feedback');
+            if (row * col === randomValue) {
+                cell.style.backgroundColor = 'lightgreen';
+                feedbackEl.value = 'Correct!';
+            }
+            else {
+                feedbackEl.value = 'Incorrect! Try again!';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            generateNumber();
+            document.querySelectorAll('td').forEach(td => td.addEventListener('click', cellClicked));
+        });
     </script>
 </head>
 <body>
@@ -46,6 +71,7 @@
         Random Number: <span id="random-number"></span>
         <button onclick="generateNumber()">Next Number</button>
     </div>
+    <input type="text" id="feedback" class="feedback" readonly>
     <table>
         <thead>
             <tr>
@@ -59,8 +85,8 @@
             {% for row in range(1, 13) %}
                 <tr>
                     <th>{{ row }}</th>
-                    {% for _ in range(12) %}
-                        <td></td>
+                    {% for col in range(1, 13) %}
+                        <td data-row="{{ row }}" data-col="{{ col }}"></td>
                     {% endfor %}
                 </tr>
             {% endfor %}
