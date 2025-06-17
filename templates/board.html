@@ -42,6 +42,7 @@
             const value = Math.floor(Math.random() * 144) + 1;
             document.getElementById('random-number').textContent = value;
             document.getElementById('feedback').textContent = '';
+            document.getElementById('feedback').value = '';
             document.querySelectorAll('td').forEach(td => td.style.backgroundColor = '');
         }
 
@@ -60,6 +61,23 @@
             }
         }
 
+                feedbackEl.value = 'Correct!';
+            }
+            else {
+                feedbackEl.value = 'Incorrect! Try again!';
+            }
+        }
+
+
+        function cellClicked(event) {
+            const cell = event.target;
+            const row = parseInt(cell.dataset.row, 10);
+            const col = parseInt(cell.dataset.col, 10);
+            const randomValue = parseInt(document.getElementById('random-number').textContent, 10);
+            if (row * col === randomValue) {
+                cell.style.backgroundColor = 'lightgreen';
+            }
+        }
         window.addEventListener('DOMContentLoaded', () => {
             generateNumber();
             document.querySelectorAll('td').forEach(td => td.addEventListener('click', cellClicked));
@@ -73,6 +91,7 @@
         <button onclick="generateNumber()">Next Number</button>
     </div>
     <div id="feedback" class="feedback"></div>
+    <input type="text" id="feedback" class="feedback" readonly>
     <table>
         <thead>
             <tr>
