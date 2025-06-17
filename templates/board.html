@@ -34,14 +34,12 @@
         .feedback {
             margin-top: 1em;
             font-size: 1.2em;
-            min-height: 1.5em;
         }
     </style>
     <script>
         function generateNumber() {
             const value = Math.floor(Math.random() * 144) + 1;
             document.getElementById('random-number').textContent = value;
-            document.getElementById('feedback').textContent = '';
             document.getElementById('feedback').value = '';
             document.querySelectorAll('td').forEach(td => td.style.backgroundColor = '');
         }
@@ -54,13 +52,6 @@
             const feedbackEl = document.getElementById('feedback');
             if (row * col === randomValue) {
                 cell.style.backgroundColor = 'lightgreen';
-                feedbackEl.textContent = 'Correct!';
-            }
-            else {
-                feedbackEl.textContent = 'Incorrect! Try again!';
-            }
-        }
-
                 feedbackEl.value = 'Correct!';
             }
             else {
@@ -90,7 +81,6 @@
         Random Number: <span id="random-number"></span>
         <button onclick="generateNumber()">Next Number</button>
     </div>
-    <div id="feedback" class="feedback"></div>
     <input type="text" id="feedback" class="feedback" readonly>
     <table>
         <thead>
