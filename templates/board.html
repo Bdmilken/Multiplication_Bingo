@@ -52,6 +52,12 @@
             font-size: 4em;
             z-index: 1000;
             visibility: hidden;
+            flex-direction: column;
+        }
+        .bingo-message button {
+            margin-top: 0.5em;
+            font-size: 0.3em;
+            padding: 0.5em 1em;
         }
     </style>
     <script>
@@ -149,6 +155,16 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            const entry =
+                performance.getEntriesByType &&
+                performance.getEntriesByType('navigation')[0];
+            const isReload =
+                (entry && entry.type === 'reload') ||
+                (performance.navigation && performance.navigation.type === 1);
+            if (isReload) {
+                window.location.replace('{{ url_for('index') }}');
+                return;
+            }
             generateNumber();
             document
                 .querySelectorAll('td')
@@ -182,6 +198,11 @@
             {% endfor %}
         </tbody>
     </table>
-    <div id="bingo-message" class="bingo-message">Bingo! You win!</div>
+    <div id="bingo-message" class="bingo-message">
+        <div>Bingo! You Win!</div>
+        <button onclick="window.location.href='{{ url_for('index') }}'">
+            New Game
+        </button>
+    </div>
 </body>
 </html>
