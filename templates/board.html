@@ -97,11 +97,10 @@
                 cell.style.backgroundColor = 'lightgreen';
                 boardState[row - 1][col - 1] = true;
                 feedbackEl.value = 'Correct!';
-
                 if (checkForBingo()) {
                     showBingoMessage();
                 } else {
-                    generateNumber();
+                    setTimeout(generateNumber, 800);
                 }
             } else {
                 feedbackEl.value = 'Incorrect! Try again!';
