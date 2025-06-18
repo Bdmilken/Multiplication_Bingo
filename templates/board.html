@@ -42,6 +42,10 @@
             background-color: #007BFF;
             color: #ffffff;
         }
+        .col-header,
+        .row-header {
+            font-size: 1em;
+        }
         td {
             background-color: #ffffff;
         }
@@ -198,14 +202,14 @@
             <tr>
                 <th></th>
                 {% for col in range(1, 13) %}
-                    <th>{{ col }}</th>
+                    <th class="col-header">{{ col }}</th>
                 {% endfor %}
             </tr>
         </thead>
         <tbody>
             {% for row in range(1, 13) %}
                 <tr>
-                    <th>{{ row }}</th>
+                    <th class="row-header">{{ row }}</th>
                     {% for col in range(1, 13) %}
                         <td data-row="{{ row }}" data-col="{{ col }}">{% if show_products %}{{ row * col }}{% endif %}</td>
                     {% endfor %}
