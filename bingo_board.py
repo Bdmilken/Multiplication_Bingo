@@ -1,13 +1,10 @@
 def generate_board():
-    """Return a 12x12 grid with factor labels."""
+    """Return a 12x12 grid with multiplication products."""
     board = []
     for row in range(1, 13):
         row_data = []
         for col in range(1, 13):
-            if row >= col:
-                row_data.append(f"{row}×{col}")
-            else:
-                row_data.append(f"{col}×{row}")
+            row_data.append(str(row * col))
         board.append(row_data)
     return board
 

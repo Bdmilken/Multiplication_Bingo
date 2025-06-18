@@ -176,11 +176,7 @@
                 <tr>
                     <th>{{ row }}</th>
                     {% for col in range(1, 13) %}
-                        {% if row >= col %}
-                            <td data-row="{{ row }}" data-col="{{ col }}">{{ row }} &times; {{ col }}</td>
-                        {% else %}
-                            <td data-row="{{ row }}" data-col="{{ col }}">{{ col }} &times; {{ row }}</td>
-                        {% endif %}
+                        <td data-row="{{ row }}" data-col="{{ col }}">{{ row * col }}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
