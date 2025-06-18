@@ -57,9 +57,30 @@
     <script>
         const boardState = Array.from({ length: 12 }, () => Array(12).fill(false));
         let selectionLocked = false;
+        let numberBag = [];
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function initializeBag() {
+            numberBag = [];
+            for (let r = 1; r <= 12; r++) {
+                for (let c = 1; c <= 12; c++) {
+                    numberBag.push(r * c);
+                }
+            }
+            shuffle(numberBag);
+        }
 
         function generateNumber() {
-            const value = Math.floor(Math.random() * 144) + 1;
+            if (numberBag.length === 0) {
+                initializeBag();
+            }
+            const value = numberBag.pop();
             document.getElementById('random-number').textContent = value;
             document.getElementById('feedback').value = '';
             selectionLocked = false;
