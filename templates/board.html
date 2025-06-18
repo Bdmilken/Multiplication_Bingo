@@ -96,7 +96,8 @@
             if (row * col === randomValue) {
                 cell.style.backgroundColor = 'lightgreen';
                 boardState[row - 1][col - 1] = true;
-                feedbackEl.value = 'Correct! New number generated';
+                feedbackEl.value = 'Correct!';
+
                 if (checkForBingo()) {
                     showBingoMessage();
                 } else {
