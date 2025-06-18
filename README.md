@@ -1,6 +1,6 @@
 # Multiplication Bingo
 
-This repository contains a command-line script that prints a 12x12 multiplication table and a small Flask web app that displays the same table in the browser. The web page also generates a random number between 1 and 144 each time you click the "Next Number" button.
+This repository contains a command-line script that prints a 12x12 multiplication table and a small Flask web app that displays the same table in the browser. The web page generates a random number between 1 and 144, and a new one is drawn whenever you correctly select the matching product on the board. When you get a match, the message "Correct!" briefly appears before the next number shows up.
 
 To win the bingo game you must mark a complete line of twelve correct cells in a row, horizontally, vertically or diagonally.
 
@@ -30,6 +30,6 @@ python3 -m pip install -r requirements.txt
 python3 app.py
 ```
 
-3. Open <http://localhost:5000/> in a web browser to view the board. Click "Next Number" to draw a new random number on the page.
+3. Open <http://localhost:5000/> in a web browser to view the board. A random number is shown at the top of the page and a new one is generated when you click the correct cell.
 
 For deployment, host the app on any platform that supports Flask applications (Heroku, Fly.io, etc.) and ensure the environment installs the dependency and runs `python3 app.py` or uses a production server like Gunicorn.
