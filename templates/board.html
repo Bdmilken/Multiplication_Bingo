@@ -95,7 +95,7 @@
         }
 
         function checkDirection(r, c, rStep, cStep) {
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 12; i++) {
                 const nr = r + i * rStep;
                 const nc = c + i * cStep;
                 if (
@@ -112,30 +112,14 @@
         }
 
         function checkForBingo() {
-            // horizontal
             for (let r = 0; r < 12; r++) {
-                for (let c = 0; c <= 7; c++) {
-                    if (checkDirection(r, c, 0, 1)) return true;
-                }
+                if (checkDirection(r, 0, 0, 1)) return true;
             }
-            // vertical
             for (let c = 0; c < 12; c++) {
-                for (let r = 0; r <= 7; r++) {
-                    if (checkDirection(r, c, 1, 0)) return true;
-                }
+                if (checkDirection(0, c, 1, 0)) return true;
             }
-            // diagonal down-right
-            for (let r = 0; r <= 7; r++) {
-                for (let c = 0; c <= 7; c++) {
-                    if (checkDirection(r, c, 1, 1)) return true;
-                }
-            }
-            // diagonal down-left
-            for (let r = 0; r <= 7; r++) {
-                for (let c = 4; c < 12; c++) {
-                    if (checkDirection(r, c, 1, -1)) return true;
-                }
-            }
+            if (checkDirection(0, 0, 1, 1)) return true;
+            if (checkDirection(0, 11, 1, -1)) return true;
             return false;
         }
 
@@ -182,6 +166,6 @@
             {% endfor %}
         </tbody>
     </table>
-    <div id="bingo-message" class="bingo-message">Bingo! You win!</div>
+    <div id="bingo-message" class="bingo-message">Bingo! 12 in a row!</div>
 </body>
 </html>
