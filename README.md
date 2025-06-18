@@ -2,6 +2,8 @@
 
 This repository contains a command-line script that prints a 12x12 multiplication table and a small Flask web app that displays the same table in the browser. The web page also generates a random number between 1 and 144 each time you click the "Next Number" button.
 
+To win the bingo game you must mark a complete line of twelve correct cells in a row, horizontally, vertically or diagonally.
+
 ## Command-line usage
 
 ```bash
