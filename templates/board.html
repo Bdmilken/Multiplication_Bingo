@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Multiplication Bingo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             display: flex;
@@ -24,15 +25,16 @@
         table {
             border-collapse: collapse;
             margin: 2em auto 0;
-            width: 80vmin;
-            height: 80vmin;
+            width: 100%;
+            max-width: 90vmin;
+            aspect-ratio: 1 / 1;
             table-layout: fixed;
         }
         th, td {
             border: 1px solid #ccc;
             padding: 0;
             text-align: center;
-            font-size: 1.4em;
+            font-size: calc(1vmin + 0.4rem);
         }
         .feedback {
             margin-top: 1em;
