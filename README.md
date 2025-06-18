@@ -30,6 +30,6 @@ python3 -m pip install -r requirements.txt
 python3 app.py
 ```
 
-3. Open <http://localhost:5000/> in a web browser to view the board. A random number is shown at the top of the page and a new one is generated when you click the correct cell.
+4. Open <http://localhost:5000/> in a web browser. You'll be greeted with a welcome screen offering "Easy" or "Hard" mode. Easy mode shows the multiplication products on the bingo board while Hard mode leaves the squares blank.
 
 For deployment, host the app on any platform that supports Flask applications (Heroku, Fly.io, etc.) and ensure the environment installs the dependency and runs `python3 app.py` or uses a production server like Gunicorn.

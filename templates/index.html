@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Multiplication Bingo</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: sans-serif;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 2em;
+            max-width: 40ch;
+        }
+        .mode-buttons {
+            display: flex;
+            gap: 2em;
+        }
+        .mode-buttons a {
+            display: inline-block;
+            padding: 1em 2em;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Mike's Math Club! The game you are about to play is Multiplication Bingo. Let's see how well you know your multiplication table's. Please select your game mode.</h1>
+    <div class="mode-buttons">
+        <a href="{{ url_for('easy_mode') }}">Easy Mode</a>
+        <a href="{{ url_for('hard_mode') }}">Hard Mode</a>
+    </div>
+</body>
+</html>

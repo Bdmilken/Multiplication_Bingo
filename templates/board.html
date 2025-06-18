@@ -176,7 +176,7 @@
                 <tr>
                     <th>{{ row }}</th>
                     {% for col in range(1, 13) %}
-                        <td data-row="{{ row }}" data-col="{{ col }}">{{ row * col }}</td>
+                        <td data-row="{{ row }}" data-col="{{ col }}">{% if show_products %}{{ row * col }}{% endif %}</td>
                     {% endfor %}
                 </tr>
             {% endfor %}
