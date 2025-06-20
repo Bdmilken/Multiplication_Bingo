@@ -4,6 +4,8 @@ This repository contains a command-line script that prints a 12x12 multiplicatio
 
 To win the bingo game you must mark a complete line of twelve correct cells in a row, horizontally, vertically or diagonally.
 
+The board page also shows a stopwatch in the upper left corner so you can see how long it takes to win. The timer starts when the board loads and stops once you hit Bingo.
+
 ## Command-line usage
 
 ```bash
