@@ -36,7 +36,7 @@
         <div class="time-board">
             <h2>Fastest Times</h2>
             <table>
-                <tr><th>Rank</th><th>Name</th><th>Time (mm:ss)</th></tr>
+                <tr><th>Rank</th><th>Name</th><th>Time </th></tr>
                 {% for entry in fastest %}
                 <tr><td>{{ loop.index }}</td><td>{{ entry.name }}</td><td>{{ entry.formatted_time }}</td></tr>
                 {% endfor %}
