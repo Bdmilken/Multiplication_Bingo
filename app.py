@@ -15,15 +15,24 @@ def save_scores(data):
         json.dump(data, f)
 
 app = Flask(__name__)
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+def format_time(seconds):
+    minutes = seconds // 60
+    secs = seconds % 60
+    return f"{minutes}:{secs:02d}"
 
 
 @app.route('/leaderboard')
 def leaderboard():
     scores = load_scores()
     fastest = sorted(scores.get('fastest', []), key=lambda x: x['time'])[:20]
+    for entry in fastest:
+        entry['formatted_time'] = format_time(entry['time'])
     fewest = sorted(scores.get('fewest', []), key=lambda x: x['count'])[:20]
     return render_template('leaderboard.html', fastest=fastest, fewest=fewest)
 
