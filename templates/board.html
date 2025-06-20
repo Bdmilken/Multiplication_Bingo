@@ -93,6 +93,12 @@
             left: 0.5em;
             font-size: 1.2em;
         }
+        #correct-counter {
+            position: fixed;
+            top: 2.5em;
+            right: 0.5em;
+            font-size: 1.2em;
+        }
         .tooltip {
             position: absolute;
             background: rgba(0, 0, 0, 0.75);
@@ -107,6 +113,7 @@
     </style>
     <script>
         const boardState = Array.from({ length: 12 }, () => Array(12).fill(false));
+        let correctCount = 0;
         let numberBag = [];
         let answerTimeout;
         let timerInterval;
@@ -163,6 +170,11 @@
 
         function updateTimerDisplay() {
             document.getElementById('timer').textContent = timeLeft;
+        }
+
+        function updateCorrectDisplay() {
+            document.getElementById('correct-counter').textContent =
+                `Correct Squares: ${correctCount}`;
         }
 
         let stopwatchInterval;
@@ -270,6 +282,8 @@
             if (row * col === randomValue) {
                 cell.style.backgroundColor = 'lightgreen';
                 boardState[row - 1][col - 1] = true;
+                correctCount++;
+                updateCorrectDisplay();
                 feedbackEl.value = 'Correct!';
                 playCorrectSound();
                 clearTimeout(answerTimeout);
@@ -327,6 +341,7 @@
             el.style.visibility = 'visible';
             const finalTime = stopStopwatch();
             document.getElementById('final-time').textContent = `Your time: ${formatTime(finalTime)}`;
+            document.getElementById('final-count').textContent = `Correct Squares: ${correctCount}`;
             playWinSound();
             clearTimeout(answerTimeout);
             clearInterval(timerInterval);
@@ -347,6 +362,7 @@
                 return;
             }
             generateNumber();
+            updateCorrectDisplay();
             startStopwatch();
             document
                 .querySelectorAll('td')
@@ -360,6 +376,7 @@
 </head>
 <body>
     <div id="stopwatch">Time: 0:00</div>
+    <div id="correct-counter"></div>
     <h1>Multiplication Bingo</h1>
     <div class="number-display">
         Random Number: <span id="random-number"></span>
@@ -397,6 +414,7 @@
     <div id="bingo-message" class="bingo-message">
         <div>Bingo! You Win!</div>
         <div id="final-time"></div>
+        <div id="final-count"></div>
         <button onclick="window.location.href='{{ url_for('index') }}'">
             New Game
         </button>
