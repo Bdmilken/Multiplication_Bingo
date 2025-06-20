@@ -176,6 +176,7 @@
             timeLeft = 15;
             updateTimerDisplay();
             answerTimeout = setTimeout(() => {
+                playIncorrectSound();
                 generateNumber();
             }, 15000);
             timerInterval = setInterval(() => {
