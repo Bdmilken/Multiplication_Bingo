@@ -265,8 +265,16 @@
                     {% for col in range(1, 13) %}
                         <td data-row="{{ row }}" data-col="{{ col }}">{% if show_products %}{{ row * col }}{% endif %}</td>
                     {% endfor %}
+                    <th class="row-header">{{ row }}</th>
                 </tr>
             {% endfor %}
+            <tr>
+                <th></th>
+                {% for col in range(1, 13) %}
+                    <th class="col-header">{{ col }}</th>
+                {% endfor %}
+                <th></th>
+            </tr>
         </tbody>
     </table>
     <div id="bingo-message" class="bingo-message">
