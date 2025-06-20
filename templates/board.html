@@ -89,42 +89,6 @@
         let numberBag = [];
 
         let audioCtx;
-        function playTone(freq, duration, type = 'sine', delay = 0) {
-            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            const start = audioCtx.currentTime + delay / 1000;
-            const end = start + duration / 1000;
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, start);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            gain.gain.setValueAtTime(1, start);
-            gain.gain.exponentialRampToValueAtTime(0.001, end);
-            osc.start(start);
-            osc.stop(end);
-        }
-
-        function playCorrectSound() {
-            playTone(1046, 300, 'triangle');
-        }
-
-        function playIncorrectSound() {
-            playTone(440, 150, 'sawtooth');
-            playTone(330, 200, 'sawtooth', 150);
-        }
-
-        function playWinSound() {
-            const melody = [
-                { f: 523.25, d: 200 },
-                { f: 659.25, d: 200 },
-                { f: 783.99, d: 200 },
-                { f: 1046.5, d: 400 }
-            ];
-            let delay = 0;
-            melody.forEach(n => {
-                playTone(n.f, n.d, 'triangle', delay);
-                delay += n.d;
         function playTone(freq, duration) {
             audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
             const osc = audioCtx.createOscillator();
