@@ -130,6 +130,10 @@
         let timerInterval;
         let timeLeft = 15;
         let inputLocked = false;
+        let potentialCells = [];
+        let potentialTime = 0;
+        let potentialCount = 0;
+        let missedOpportunity = null;
 
         let audioCtx;
         function playTone(freq, duration, type = 'sine', delay = 0) {
@@ -212,6 +216,53 @@
             clearInterval(stopwatchInterval);
             return Math.floor((Date.now() - startTime) / 1000);
         }
+        function potentialRow(r, c) {
+            for (let i = 0; i < 12; i++) {
+                if (i === c) continue;
+                if (!boardState[r][i]) return false;
+            }
+            return true;
+        }
+
+        function potentialCol(r, c) {
+            for (let i = 0; i < 12; i++) {
+                if (i === r) continue;
+                if (!boardState[i][c]) return false;
+            }
+            return true;
+        }
+
+        function potentialDiag1(r, c) {
+            if (r !== c) return false;
+            for (let i = 0; i < 12; i++) {
+                if (i === r) continue;
+                if (!boardState[i][i]) return false;
+            }
+            return true;
+        }
+
+        function potentialDiag2(r, c) {
+            if (r + c !== 11) return false;
+            for (let i = 0; i < 12; i++) {
+                if (i === r) continue;
+                if (!boardState[i][11 - i]) return false;
+            }
+            return true;
+        }
+
+        function findWinningCells(value) {
+            const cells = [];
+            for (let r = 0; r < 12; r++) {
+                for (let c = 0; c < 12; c++) {
+                    if (boardState[r][c]) continue;
+                    if ((r + 1) * (c + 1) !== value) continue;
+                    if (potentialRow(r,c) || potentialCol(r,c) || potentialDiag1(r,c) || potentialDiag2(r,c)) {
+                        cells.push(`${r + 1}-${c + 1}`);
+                    }
+                }
+            }
+            return cells;
+        }
 
         function initializeBag() {
             numberBag = [];
@@ -228,6 +279,9 @@
                 initializeBag();
             }
             const value = numberBag.pop();
+            potentialCells = findWinningCells(value);
+            potentialTime = Math.floor((Date.now() - startTime) / 1000);
+            potentialCount = correctCount;
             document.getElementById('random-number').textContent = value;
             document.getElementById('feedback').value = '';
             clearTimeout(answerTimeout);
@@ -294,6 +348,12 @@
                 cell.style.backgroundColor = 'lightgreen';
                 boardState[row - 1][col - 1] = true;
                 correctCount++;
+                if (potentialCells.length > 0) {
+                    const key = `${row}-${col}`;
+                    if (!potentialCells.includes(key) && !missedOpportunity) {
+                        missedOpportunity = { time: potentialTime, count: potentialCount };
+                    }
+                }
                 updateCorrectDisplay();
                 feedbackEl.value = 'Correct!';
                 playCorrectSound();
@@ -354,6 +414,9 @@
             document.getElementById('final-time').textContent = `Your time: ${formatTime(finalTime)}`;
             document.getElementById('final-count').textContent = `Correct Squares: ${correctCount}`;
             playWinSound();
+            if (missedOpportunity) {
+                document.getElementById("missed-info").textContent = `You could have won at ${formatTime(missedOpportunity.time)} with ${missedOpportunity.count} squares`;
+            }
             clearTimeout(answerTimeout);
             clearInterval(timerInterval);
             document
@@ -451,6 +514,7 @@
         <div>Bingo! You Win!</div>
         <div id="final-time"></div>
         <div id="final-count"></div>
+        <div id="missed-info"></div>
         <button onclick="window.location.href='{{ url_for('index') }}'">
             New Game
         </button>
