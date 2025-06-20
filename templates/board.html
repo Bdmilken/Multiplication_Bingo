@@ -167,9 +167,15 @@
         let stopwatchInterval;
         let startTime;
 
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
         function updateStopwatch() {
             const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            document.getElementById('stopwatch').textContent = `Time: ${elapsed}s`;
+            document.getElementById('stopwatch').textContent = `Time: ${formatTime(elapsed)}`;
         }
 
         function startStopwatch() {
@@ -312,7 +318,7 @@
             const el = document.getElementById('bingo-message');
             el.style.visibility = 'visible';
             const finalTime = stopStopwatch();
-            document.getElementById('final-time').textContent = `Your time: ${finalTime}s`;
+            document.getElementById('final-time').textContent = `Your time: ${formatTime(finalTime)}`;
             playWinSound();
             clearTimeout(answerTimeout);
             clearInterval(timerInterval);
@@ -345,7 +351,7 @@
     </script>
 </head>
 <body>
-    <div id="stopwatch">Time: 0s</div>
+    <div id="stopwatch">Time: 0:00</div>
     <h1>Multiplication Bingo</h1>
     <div class="number-display">
         Random Number: <span id="random-number"></span>
