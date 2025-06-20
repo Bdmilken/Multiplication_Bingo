@@ -111,6 +111,7 @@
         let answerTimeout;
         let timerInterval;
         let timeLeft = 15;
+        let inputLocked = false;
 
         let audioCtx;
         function playTone(freq, duration, type = 'sine', delay = 0) {
@@ -251,6 +252,9 @@
         }
 
         function cellClicked(event) {
+            if (inputLocked) {
+                return;
+            }
             const cell = event.target;
             hideTooltip();
             const row = parseInt(cell.dataset.row, 10);
@@ -273,7 +277,11 @@
                 if (checkForBingo()) {
                     showBingoMessage();
                 } else {
-                    setTimeout(generateNumber, 1500);
+                    inputLocked = true;
+                    setTimeout(() => {
+                        inputLocked = false;
+                        generateNumber();
+                    }, 1500);
                 }
             } else {
                 feedbackEl.value = 'Incorrect! Try again!';
