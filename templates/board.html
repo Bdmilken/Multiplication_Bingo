@@ -89,26 +89,43 @@
         let numberBag = [];
 
         let audioCtx;
-        function playTone(freq, duration) {
+        function playTone(freq, duration, type = 'sine', delay = 0) {
             audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.value = freq;
+            const start = audioCtx.currentTime + delay / 1000;
+            const end = start + duration / 1000;
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, start);
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-            osc.start();
-            setTimeout(() => osc.stop(), duration);
+            gain.gain.setValueAtTime(1, start);
+            gain.gain.exponentialRampToValueAtTime(0.001, end);
+            osc.start(start);
+            osc.stop(end);
         }
 
-        function playCorrectSound() { playTone(880, 200); }
-        function playIncorrectSound() { playTone(220, 400); }
+        function playCorrectSound() {
+            playTone(1046, 150, 'triangle');
+            playTone(1318, 150, 'triangle', 150);
+        }
+
+        function playIncorrectSound() {
+            playTone(392, 200, 'square');
+            playTone(196, 300, 'square', 200);
+        }
+
         function playWinSound() {
-            const notes = [660, 880, 1320];
+            const melody = [
+                { f: 523.25, d: 150 },
+                { f: 698.46, d: 150 },
+                { f: 880.0, d: 150 },
+                { f: 1046.5, d: 300 }
+            ];
             let delay = 0;
-            notes.forEach(freq => {
-                setTimeout(() => playTone(freq, 200), delay);
-                delay += 250;
+            melody.forEach(note => {
+                playTone(note.f, note.d, 'triangle', delay);
+                delay += note.d;
             });
         }
 
