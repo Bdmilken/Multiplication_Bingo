@@ -134,6 +134,7 @@
         let potentialTime = 0;
         let potentialCount = 0;
         let missedOpportunity = null;
+        const mode = '{{ "Easy" if show_products else "Hard" }}';
 
         let audioCtx;
         function playTone(freq, duration, type = 'sine', delay = 0) {
@@ -437,7 +438,7 @@
                             fetch('/submit_score', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ name, time, count })
+                                body: JSON.stringify({ name, time, count, mode })
                             }).then(() => {
                                 document.getElementById('score-message').textContent = 'Score saved!';
                                 document.getElementById('submit-score').disabled = true;
