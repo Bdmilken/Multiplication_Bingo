@@ -83,6 +83,17 @@
             font-size: 0.3em;
             padding: 0.5em 1em;
         }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.75);
+            color: #ffffff;
+            padding: 0.2em 0.4em;
+            font-size: 0.9em;
+            border-radius: 4px;
+            pointer-events: none;
+            display: none;
+            z-index: 1001;
+        }
     </style>
     <script>
         const boardState = Array.from({ length: 12 }, () => Array(12).fill(false));
@@ -155,8 +166,36 @@
             document.getElementById('feedback').value = '';
         }
 
+        let hoverTimer;
+        function showTooltip(cell) {
+            const tooltip = document.getElementById('tooltip');
+            const row = cell.dataset.row;
+            const col = cell.dataset.col;
+            tooltip.textContent = `Row ${row}, Column ${col}`;
+            const rect = cell.getBoundingClientRect();
+            tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2}px`;
+            tooltip.style.top = `${rect.top + window.scrollY - 25}px`;
+            tooltip.style.display = 'block';
+        }
+
+        function hideTooltip() {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'none';
+        }
+
+        function handleMouseEnter(event) {
+            const cell = event.target;
+            hoverTimer = setTimeout(() => showTooltip(cell), 1000);
+        }
+
+        function handleMouseLeave() {
+            clearTimeout(hoverTimer);
+            hideTooltip();
+        }
+
         function cellClicked(event) {
             const cell = event.target;
+            hideTooltip();
             const row = parseInt(cell.dataset.row, 10);
             const col = parseInt(cell.dataset.col, 10);
             if (boardState[row - 1][col - 1]) {
@@ -239,7 +278,11 @@
             generateNumber();
             document
                 .querySelectorAll('td')
-                .forEach(td => td.addEventListener('click', cellClicked));
+                .forEach(td => {
+                    td.addEventListener('click', cellClicked);
+                    td.addEventListener('mouseenter', handleMouseEnter);
+                    td.addEventListener('mouseleave', handleMouseLeave);
+                });
         });
     </script>
 </head>
@@ -283,5 +326,6 @@
             New Game
         </button>
     </div>
+    <div id="tooltip" class="tooltip"></div>
 </body>
 </html>
