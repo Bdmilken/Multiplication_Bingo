@@ -88,6 +88,30 @@
         const boardState = Array.from({ length: 12 }, () => Array(12).fill(false));
         let numberBag = [];
 
+        let audioCtx;
+        function playTone(freq, duration) {
+            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            setTimeout(() => osc.stop(), duration);
+        }
+
+        function playCorrectSound() { playTone(880, 200); }
+        function playIncorrectSound() { playTone(220, 400); }
+        function playWinSound() {
+            const notes = [660, 880, 1320];
+            let delay = 0;
+            notes.forEach(freq => {
+                setTimeout(() => playTone(freq, 200), delay);
+                delay += 250;
+            });
+        }
+
         function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -130,6 +154,7 @@
                 cell.style.backgroundColor = 'lightgreen';
                 boardState[row - 1][col - 1] = true;
                 feedbackEl.value = 'Correct!';
+                playCorrectSound();
                 if (checkForBingo()) {
                     showBingoMessage();
                 } else {
@@ -137,6 +162,7 @@
                 }
             } else {
                 feedbackEl.value = 'Incorrect! Try again!';
+                playIncorrectSound();
             }
         }
 
@@ -176,6 +202,7 @@
         function showBingoMessage() {
             const el = document.getElementById('bingo-message');
             el.style.visibility = 'visible';
+            playWinSound();
             document
                 .querySelectorAll('td')
                 .forEach(td => td.removeEventListener('click', cellClicked));
