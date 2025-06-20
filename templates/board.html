@@ -99,6 +99,17 @@
             left: 0.5em;
             font-size: 1.2em;
         }
+        #home-button {
+            position: fixed;
+            top: 0.5em;
+            right: 0.5em;
+            font-size: 1.2em;
+            background: #007BFF;
+            color: #ffffff;
+            padding: 0.2em 0.6em;
+            border-radius: 4px;
+            text-decoration: none;
+        }
         .tooltip {
             position: absolute;
             background: rgba(0, 0, 0, 0.75);
@@ -400,6 +411,7 @@
 <body>
     <div id="stopwatch">Time: 0:00</div>
     <div id="correct-counter"></div>
+    <a id="home-button" href="{{ url_for('index') }}">Home</a>
     <h1>Multiplication Bingo</h1>
     <div class="number-display">
         Random Number: <span id="random-number"></span>
