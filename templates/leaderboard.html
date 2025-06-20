@@ -36,18 +36,18 @@
         <div class="time-board">
             <h2>Fastest Times</h2>
             <table>
-                <tr><th>Rank</th><th>Name</th><th>Mode</th><th>Time </th></tr>
+                <tr><th>Rank</th><th>Name</th><th>Time </th></tr>
                 {% for entry in fastest %}
-                <tr><td>{{ loop.index }}</td><td>{{ entry.name }}</td><td>{{ entry.mode }}</td><td>{{ entry.formatted_time }}</td></tr>
+                <tr><td>{{ loop.index }}</td><td>{{ entry.name }}</td><td>{{ entry.formatted_time }}</td></tr>
                 {% endfor %}
             </table>
         </div>
         <div class="count-board">
             <h2>Fewest Correct Squares</h2>
             <table>
-                <tr><th>Rank</th><th>Name</th><th>Mode</th><th>Squares</th></tr>
+                <tr><th>Rank</th><th>Name</th><th>Squares</th></tr>
                 {% for entry in fewest %}
-                <tr><td>{{ loop.index }}</td><td>{{ entry.name }}</td><td>{{ entry.mode }}</td><td>{{ entry.count }}</td></tr>
+                <tr><td>{{ loop.index }}</td><td>{{ entry.name }}</td><td>{{ entry.count }}</td></tr>
                 {% endfor %}
             </table>
         </div>

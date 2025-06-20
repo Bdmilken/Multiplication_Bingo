@@ -33,10 +33,7 @@ def leaderboard():
     fastest = sorted(scores.get('fastest', []), key=lambda x: x['time'])[:20]
     for entry in fastest:
         entry['formatted_time'] = format_time(entry['time'])
-        entry['mode'] = entry.get('mode', 'Unknown')
     fewest = sorted(scores.get('fewest', []), key=lambda x: x['count'])[:20]
-    for entry in fewest:
-        entry['mode'] = entry.get('mode', 'Unknown')
     return render_template('leaderboard.html', fastest=fastest, fewest=fewest)
 
 
@@ -72,7 +69,6 @@ def submit_score():
     name = data.get('name', 'Anonymous')[:20]
     time = int(data.get('time', 0))
     count = int(data.get('count', 0))
-    mode = data.get('mode', 'Unknown')
 
     scores = load_scores()
     fast = scores.setdefault('fastest', [])
@@ -81,12 +77,12 @@ def submit_score():
     if len(fast) < 20 or time < max(fast, key=lambda x: x['time'])['time']:
         if len(fast) >= 20:
             fast.remove(max(fast, key=lambda x: x['time']))
-        fast.append({'name': name, 'time': time, 'mode': mode})
+        fast.append({'name': name, 'time': time})
 
     if len(few) < 20 or count < max(few, key=lambda x: x['count'])['count']:
         if len(few) >= 20:
             few.remove(max(few, key=lambda x: x['count']))
-        few.append({'name': name, 'count': count, 'mode': mode})
+        few.append({'name': name, 'count': count})
 
     save_scores(scores)
     return jsonify({'success': True})
