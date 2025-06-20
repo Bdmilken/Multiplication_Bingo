@@ -83,6 +83,16 @@
             font-size: 0.3em;
             padding: 0.5em 1em;
         }
+        #final-time {
+            font-size: 0.3em;
+            margin-top: 0.2em;
+        }
+        #stopwatch {
+            position: fixed;
+            top: 0.5em;
+            left: 0.5em;
+            font-size: 1.2em;
+        }
         .tooltip {
             position: absolute;
             background: rgba(0, 0, 0, 0.75);
@@ -152,6 +162,25 @@
 
         function updateTimerDisplay() {
             document.getElementById('timer').textContent = timeLeft;
+        }
+
+        let stopwatchInterval;
+        let startTime;
+
+        function updateStopwatch() {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('stopwatch').textContent = `Time: ${elapsed}s`;
+        }
+
+        function startStopwatch() {
+            startTime = Date.now();
+            updateStopwatch();
+            stopwatchInterval = setInterval(updateStopwatch, 1000);
+        }
+
+        function stopStopwatch() {
+            clearInterval(stopwatchInterval);
+            return Math.floor((Date.now() - startTime) / 1000);
         }
 
         function initializeBag() {
@@ -282,6 +311,8 @@
         function showBingoMessage() {
             const el = document.getElementById('bingo-message');
             el.style.visibility = 'visible';
+            const finalTime = stopStopwatch();
+            document.getElementById('final-time').textContent = `Your time: ${finalTime}s`;
             playWinSound();
             clearTimeout(answerTimeout);
             clearInterval(timerInterval);
@@ -302,6 +333,7 @@
                 return;
             }
             generateNumber();
+            startStopwatch();
             document
                 .querySelectorAll('td')
                 .forEach(td => {
@@ -313,6 +345,7 @@
     </script>
 </head>
 <body>
+    <div id="stopwatch">Time: 0s</div>
     <h1>Multiplication Bingo</h1>
     <div class="number-display">
         Random Number: <span id="random-number"></span>
@@ -349,6 +382,7 @@
     </table>
     <div id="bingo-message" class="bingo-message">
         <div>Bingo! You Win!</div>
+        <div id="final-time"></div>
         <button onclick="window.location.href='{{ url_for('index') }}'">
             New Game
         </button>
