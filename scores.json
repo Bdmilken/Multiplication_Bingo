@@ -1,1 +1,2 @@
-{"fastest": [{"name": "Bailey", "time": 410}, {"name": "Lorraine", "time": 627}], "fewest": [{"name": "Bailey", "count": 88}, {"name": "Lorraine", "count": 94}]}
+{"fastest": [{"name": "Bailey", "time": 410, "mode": "Easy"}, {"name": "Lorraine", "time": 627, "mode": "Hard"}], "fewest": [{"name": "Bailey", "count": 88, "mode": "Easy"}, {"name": "Lorraine", "count": 94, "mode": "Hard"}]}
+
