@@ -118,6 +118,9 @@
             const cell = event.target;
             const row = parseInt(cell.dataset.row, 10);
             const col = parseInt(cell.dataset.col, 10);
+            if (boardState[row - 1][col - 1]) {
+                return;
+            }
             const randomValue = parseInt(
                 document.getElementById('random-number').textContent,
                 10
