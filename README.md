@@ -41,7 +41,7 @@ For deployment, host the app on any platform that supports Flask applications (H
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-## Docker usage
+## Using Docker
 
 To run the app inside a container you can use the provided Dockerfile. Build and start the container with:
 
@@ -50,5 +50,5 @@ docker build -t multiplication-bingo .
 docker run -p 8080:8080 multiplication-bingo
 ```
 
-Gunicorn is installed via `requirements.txt` and the container listens on port 8080.
+The container launches `gunicorn app:app --bind 0.0.0.0:8080`, so `gunicorn` must be available (it is installed via `requirements.txt`). The container listens on port 8080.
 When deploying in production, mount persistent storage (for example a Fly.io volume or a database) so the `scores.json` file is preserved across deployments.
