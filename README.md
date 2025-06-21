@@ -38,6 +38,9 @@ python3 app.py
 
 For deployment, host the app on any platform that supports Flask applications (Heroku, Fly.io, etc.) and ensure the environment installs the dependency and runs `python3 app.py` or uses a production server like Gunicorn.
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 ## Docker usage
 
 To run the app inside a container you can use the provided Dockerfile. Build and start the container with:
