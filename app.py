@@ -4,17 +4,21 @@ import os
 
 SCORE_FILE = 'scores.json'
 
+
 def load_scores():
     if not os.path.exists(SCORE_FILE):
         return {"fastest": [], "fewest": []}
     with open(SCORE_FILE, 'r') as f:
         return json.load(f)
 
+
 def save_scores(data):
     with open(SCORE_FILE, 'w') as f:
         json.dump(data, f)
 
+
 app = Flask(__name__)
+
 
 @app.route('/')
 def index():
@@ -58,8 +62,14 @@ def check_score():
     scores = load_scores()
     fast = scores.get('fastest', [])
     few = scores.get('fewest', [])
-    qualifies_fast = len(fast) < 20 or time < max(fast, key=lambda x: x['time'])['time']
-    qualifies_few = len(few) < 20 or count < max(few, key=lambda x: x['count'])['count']
+    qualifies_fast = (
+        len(fast) < 20
+        or time < max(fast, key=lambda x: x['time'])['time']
+    )
+    qualifies_few = (
+        len(few) < 20
+        or count < max(few, key=lambda x: x['count'])['count']
+    )
     return jsonify({'fastest': qualifies_fast, 'fewest': qualifies_few})
 
 
