@@ -2,18 +2,26 @@ from flask import Flask, render_template, request, jsonify
 import json
 import os
 
-SCORE_FILE = 'scores.json'
+# Determine the path to the scores file relative to this script so that the app
+# works no matter where it's launched from.
+SCORE_FILE = os.path.join(os.path.dirname(__file__), 'scores.json')
 
 
 def load_scores():
     if not os.path.exists(SCORE_FILE):
+def load_scores(path=SCORE_FILE):
+    """Load the score data from disk."""
+    if not os.path.exists(path):
         return {"fastest": [], "fewest": []}
-    with open(SCORE_FILE, 'r') as f:
+    with open(path, 'r') as f:
         return json.load(f)
 
 
 def save_scores(data):
     with open(SCORE_FILE, 'w') as f:
+def save_scores(data, path=SCORE_FILE):
+    """Persist the score data to disk."""
+    with open(path, 'w') as f:
         json.dump(data, f)
 
 
