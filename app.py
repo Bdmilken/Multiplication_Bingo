@@ -6,6 +6,9 @@ import os
 # works no matter where it's launched from.
 SCORE_FILE = os.path.join(os.path.dirname(__file__), 'scores.json')
 
+
+def load_scores():
+    if not os.path.exists(SCORE_FILE):
 def load_scores(path=SCORE_FILE):
     """Load the score data from disk."""
     if not os.path.exists(path):
@@ -13,12 +16,17 @@ def load_scores(path=SCORE_FILE):
     with open(path, 'r') as f:
         return json.load(f)
 
+
+def save_scores(data):
+    with open(SCORE_FILE, 'w') as f:
 def save_scores(data, path=SCORE_FILE):
     """Persist the score data to disk."""
     with open(path, 'w') as f:
         json.dump(data, f)
 
+
 app = Flask(__name__)
+
 
 @app.route('/')
 def index():
@@ -62,8 +70,14 @@ def check_score():
     scores = load_scores()
     fast = scores.get('fastest', [])
     few = scores.get('fewest', [])
-    qualifies_fast = len(fast) < 20 or time < max(fast, key=lambda x: x['time'])['time']
-    qualifies_few = len(few) < 20 or count < max(few, key=lambda x: x['count'])['count']
+    qualifies_fast = (
+        len(fast) < 20
+        or time < max(fast, key=lambda x: x['time'])['time']
+    )
+    qualifies_few = (
+        len(few) < 20
+        or count < max(few, key=lambda x: x['count'])['count']
+    )
     return jsonify({'fastest': qualifies_fast, 'fewest': qualifies_few})
 
 
