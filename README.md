@@ -36,3 +36,14 @@ python3 app.py
 4. Open <http://localhost:5000/> in a web browser. You'll be greeted with a welcome screen offering "Easy" or "Hard" mode. Easy mode shows the multiplication products on the bingo board while Hard mode leaves the squares blank.
 
 For deployment, host the app on any platform that supports Flask applications (Heroku, Fly.io, etc.) and ensure the environment installs the dependency and runs `python3 app.py` or uses a production server like Gunicorn.
+
+## Docker usage
+
+To run the app inside a container you can use the provided Dockerfile. Build and start the container with:
+
+```bash
+docker build -t multiplication-bingo .
+docker run -p 8080:8080 multiplication-bingo
+```
+
+Gunicorn is installed via `requirements.txt` and the container listens on port 8080.
