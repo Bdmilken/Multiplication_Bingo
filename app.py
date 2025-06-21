@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import json
 import os
+import tempfile
 
 # Determine the path to the scores file relative to this script so that the app
 # works no matter where it's launched from.
@@ -16,9 +17,15 @@ def load_scores(path=SCORE_FILE):
 
 
 def save_scores(data, path=SCORE_FILE):
-    """Persist the score data to disk."""
-    with open(path, 'w') as f:
-        json.dump(data, f)
+    """Persist the score data to disk atomically."""
+    directory = os.path.dirname(path)
+    with tempfile.NamedTemporaryFile(
+        'w', dir=directory, delete=False
+    ) as tmp:
+        json.dump(data, tmp)
+        tmp.flush()
+        os.fsync(tmp.fileno())
+    os.replace(tmp.name, path)
 
 
 app = Flask(__name__)

@@ -52,3 +52,23 @@ docker run -p 8080:8080 multiplication-bingo
 
 The container launches `gunicorn app:app --bind 0.0.0.0:8080`, so `gunicorn` must be available (it is installed via `requirements.txt`). The container listens on port 8080.
 When deploying in production, mount persistent storage (for example a Fly.io volume or a database) so the `scores.json` file is preserved across deployments.
+
+### Persisting scores
+
+To keep leaderboard data when the container restarts, mount `scores.json` on a
+persistent volume. Create a volume and attach it when starting the container:
+
+```bash
+docker volume create bingo-scores
+docker run -p 8080:8080 -v bingo-scores:/app/scores.json multiplication-bingo
+```
+
+You can also mount a local file instead of a Docker volume:
+
+```bash
+docker run -p 8080:8080 \
+  -v "$(pwd)/scores.json:/app/scores.json" multiplication-bingo
+```
+
+Use the same volume or file every time you launch the container so the saved
+results persist between runs.
