@@ -7,9 +7,6 @@ import os
 SCORE_FILE = os.path.join(os.path.dirname(__file__), 'scores.json')
 
 
-def load_scores():
-    if not os.path.exists(SCORE_FILE):
-        
 def load_scores(path=SCORE_FILE):
     """Load the score data from disk."""
     if not os.path.exists(path):
@@ -18,8 +15,6 @@ def load_scores(path=SCORE_FILE):
         return json.load(f)
 
 
-def save_scores(data):
-    with open(SCORE_FILE, 'w') as f:
 def save_scores(data, path=SCORE_FILE):
     """Persist the score data to disk."""
     with open(path, 'w') as f:
@@ -43,11 +38,21 @@ def format_time(seconds):
 @app.route('/leaderboard')
 def leaderboard():
     scores = load_scores()
-    fastest = sorted(scores.get('fastest', []), key=lambda x: x['time'])[:20]
+    fastest = sorted(
+        scores.get('fastest', []),
+        key=lambda x: x['time'],
+    )[:20]
     for entry in fastest:
         entry['formatted_time'] = format_time(entry['time'])
-    fewest = sorted(scores.get('fewest', []), key=lambda x: x['count'])[:20]
-    return render_template('leaderboard.html', fastest=fastest, fewest=fewest)
+    fewest = sorted(
+        scores.get('fewest', []),
+        key=lambda x: x['count'],
+    )[:20]
+    return render_template(
+        'leaderboard.html',
+        fastest=fastest,
+        fewest=fewest,
+    )
 
 
 @app.route('/easy')
@@ -93,12 +98,18 @@ def submit_score():
     fast = scores.setdefault('fastest', [])
     few = scores.setdefault('fewest', [])
 
-    if len(fast) < 20 or time < max(fast, key=lambda x: x['time'])['time']:
+    if (
+        len(fast) < 20
+        or time < max(fast, key=lambda x: x['time'])['time']
+    ):
         if len(fast) >= 20:
             fast.remove(max(fast, key=lambda x: x['time']))
         fast.append({'name': name, 'time': time})
 
-    if len(few) < 20 or count < max(few, key=lambda x: x['count'])['count']:
+    if (
+        len(few) < 20
+        or count < max(few, key=lambda x: x['count'])['count']
+    ):
         if len(few) >= 20:
             few.remove(max(few, key=lambda x: x['count']))
         few.append({'name': name, 'count': count})
