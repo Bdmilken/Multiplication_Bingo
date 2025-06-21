@@ -36,3 +36,7 @@ python3 app.py
 4. Open <http://localhost:5000/> in a web browser. You'll be greeted with a welcome screen offering "Easy" or "Hard" mode. Easy mode shows the multiplication products on the bingo board while Hard mode leaves the squares blank.
 
 For deployment, host the app on any platform that supports Flask applications (Heroku, Fly.io, etc.) and ensure the environment installs the dependency and runs `python3 app.py` or uses a production server like Gunicorn.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
