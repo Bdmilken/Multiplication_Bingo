@@ -9,7 +9,7 @@ SCORE_FILE = os.path.join(os.path.dirname(__file__), 'scores.json')
 
 def load_scores():
     if not os.path.exists(SCORE_FILE):
-def load_scores(path=SCORE_FILE):
+    def load_scores(path=SCORE_FILE):
     """Load the score data from disk."""
     if not os.path.exists(path):
         return {"fastest": [], "fewest": []}
