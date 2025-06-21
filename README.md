@@ -37,4 +37,15 @@ python3 app.py
 5. Navigate to <http://localhost:5000/leaderboard> to view the fastest times and fewest squares used. Scores are stored in `scores.json` (an example file lives in the `example/` directory).
 
 For deployment, host the app on any platform that supports Flask applications (Heroku, Fly.io, etc.) and ensure the environment installs the dependency and runs `python3 app.py` or uses a production server like Gunicorn.
+
+## Docker usage
+
+To run the app inside a container you can use the provided Dockerfile. Build and start the container with:
+
+```bash
+docker build -t multiplication-bingo .
+docker run -p 8080:8080 multiplication-bingo
+```
+
+Gunicorn is installed via `requirements.txt` and the container listens on port 8080.
 When deploying in production, mount persistent storage (for example a Fly.io volume or a database) so the `scores.json` file is preserved across deployments.
